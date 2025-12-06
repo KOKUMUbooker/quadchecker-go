@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func main() {
@@ -19,42 +20,47 @@ func main() {
 		x = len(rowCols)
 		y++ // Each line represents a row
 	}
-
+	
 	if scanner.Err() != nil {
 		return
 	}
 
 	res := ""
 	if QuadA(x, y) == out {
-		res += "[quadA] [" + string(x) + "] [" + string(y) + "]"
+		res += "[quadA] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
 	}
 
 	if QuadB(x, y) == out {
 		if len(res) > 0 {
 			res += " || "
 		}
-		res += "[quadB] [" + string(x) + "] [" + string(y) + "]"
+		res += "[quadB] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
 	}
 
 	if QuadC(x, y) == out {
 		if len(res) > 0 {
 			res += " || "
 		}
-		res += "[quadC] [" + string(x) + "] [" + string(y) + "]"
+		res += "[quadC] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
 	}
 
 	if QuadD(x, y) == out {
 		if len(res) > 0 {
 			res += " || "
 		}
-		res += "[quadD] [" + string(x) + "] [" + string(y) + "]"
+		res += "[quadD] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
 	}
 
 	if QuadE(x, y) == out {
 		if len(res) > 0 {
 			res += " || "
 		}
-		res += "[quadE] [" + string(x) + "] [" + string(y) + "]"
+		res += "[quadE] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
+	}
+
+	if res == "" {
+		fmt.Printf("Not a quad function\n")
+		return
 	}
 
 	res += "\n"
