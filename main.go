@@ -1,119 +1,29 @@
 package main
 
-import (
-	"os"
-	"os/exec"
-)
-
-func splitLines(s string) []string {
-	var out []string
-	start := 0
-	for i := 0; i < len(s); i++ {
-		if s[i] == '\n' {
-			out = append(out, s[start:i])
-			start = i + 1
-		}
-	}
-	if start < len(s) {
-		out = append(out, s[start:])
-	}
-	return out
-}
-
-func compareLines(a, b []string) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := 0; i < len(a); i++ {
-		if !equal(a[i], b[i]) {
-			return false
-		}
-	}
-	return true
-}
-
-func equal(a, b string) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := 0; i < len(a); i++ {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
-}
-
-func itoa(n int) string {
-	if n == 0 {
-		return "0"
-	}
-
-	sign := ""
-	if n < 0 {
-		sign = "-"
-		n = -n
-	}
-
-	strNum := ""
-	for n > 0 {
-		digit := n % 10
-		s = string('0'+digit) + s // prepend the digit
-		n /= 10
-	}
-
-	return sign + strNum
-}
-
 func main() {
-	//chk output of given
-	input, _ := os.ReadFile(os.Stdin.Name())
-	if len(input) == 0 {
-		os.Stdout.WriteString("Not a quad function")
-		return
-	}
-	lines := splitLines(string(input))
-	h := len(lines)
-	if h == 0 {
-		os.Stdout.WriteString("Not a quad function")
-		return
-	}
-	w := len(lines[0])
-	for _, l := range lines {
-		if len(l) != w {
-			os.Stdout.WriteString("Not a quad function")
-			return
-		}
-	}
-//slices to for testing matches....names for output matches...matches slice for storing matches
-	quads := []string{"./quadA", "./quadB", "./quadC", "./quadD", "./quadE"}
-	names := []string{"quadA", "quadB", "quadC", "quadD", "quadE"}
-	matches := []string{}
+}
 
-	for i := 0; i < len(quads); i++ {
-		//exec.Command takes quad name and x,y as parameters stored in cmd
-		cmd := exec.Command(quads[i], itoa(w), itoa(h))
-		//comd.Output stores output in out
-		out, err := cmd.Output()
-		if err != nil {
-			continue
+func QuadA(x, y int) string {
+	res := ""
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && col == 1 { // Top left corner
+				res += "o"
+			} else if row == 1 && col == x { // Top right corner
+				res += "o"
+			} else if row == y && col == 1 { // Bottom left corner
+				res += "o"
+			} else if row == y && col == x { // Bottom right corner
+				res += "o"
+			} else if row == 1 || row == y { // bottom and top border
+				res += "-"
+			} else if col == 1 || col == x { // side borders
+				res += "|"
+			} else { // empty insides
+				res += " "
+			}
 		}
-		//split lines of quad and store for comparison
-		genLines := splitLines(string(out))
-		if compareLines(lines, genLines) {//check which quad matches the given quad at stdin and store in matches slice
-			matches = append(matches, "["+names[i]+"] ["+itoa(w)+"] ["+itoa(h)+"]")
-		}
+		res += "\n" // new line after row
 	}
-
-	if len(matches) == 0 {//no matches, not a quad function
-		os.Stdout.WriteString("Not a quad function")
-		return
-	}
-
-	for i := 0; i < len(matches); i++ {//add || to out put
-		if i > 0 {
-			os.Stdout.WriteString(" || ")
-		}
-		os.Stdout.WriteString(matches[i])
-	}
+	return res
 }
