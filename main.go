@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 )
 
@@ -23,7 +24,41 @@ func main() {
 		return
 	}
 
-	
+	res := ""
+	if QuadA(x, y) == out {
+		res += "[quadA] [" + string(x) + "] [" + string(y) + "]"
+	}
+
+	if QuadB(x, y) == out {
+		if len(res) > 0 {
+			res += " || "
+		}
+		res += "[quadB] [" + string(x) + "] [" + string(y) + "]"
+	}
+
+	if QuadC(x, y) == out {
+		if len(res) > 0 {
+			res += " || "
+		}
+		res += "[quadC] [" + string(x) + "] [" + string(y) + "]"
+	}
+
+	if QuadD(x, y) == out {
+		if len(res) > 0 {
+			res += " || "
+		}
+		res += "[quadD] [" + string(x) + "] [" + string(y) + "]"
+	}
+
+	if QuadE(x, y) == out {
+		if len(res) > 0 {
+			res += " || "
+		}
+		res += "[quadE] [" + string(x) + "] [" + string(y) + "]"
+	}
+
+	res += "\n"
+	fmt.Printf("%v", res)
 }
 
 func QuadA(x, y int) string {
