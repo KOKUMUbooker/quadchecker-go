@@ -1,6 +1,29 @@
 package main
 
+import (
+	"bufio"
+	"os"
+)
+
 func main() {
+	// Read piped data from std input
+	scanner := bufio.NewScanner(os.Stdin)
+	out := ""
+	x := 0
+	y := 0
+
+	for scanner.Scan() { // Read line by line
+		rowCols := scanner.Text()
+		out += rowCols + "\n"
+		x = len(rowCols)
+		y++ // Each line represents a row
+	}
+
+	if scanner.Err() != nil {
+		return
+	}
+
+	
 }
 
 func QuadA(x, y int) string {
