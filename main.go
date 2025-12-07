@@ -91,3 +91,103 @@ func QuadA(x, y int) string {
 	}
 	return res
 }
+
+func QuadB(x, y int) string {
+	res := ""
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && col == 1 { // Top left corner
+				res += "/"
+			} else if row == 1 && col == x { // Top right corner
+				res += "\\"
+			} else if row == y && col == 1 { // Bottom left corner
+				res += "\\"
+			} else if row == y && col == x { // Bottom right corner
+				res += "/"
+			} else if row == 1 || row == y { // bottom and top border
+				res += "*"
+			} else if col == 1 || col == x { // side borders
+				res += "*"
+			} else { // empty insides
+				res += " "
+			}
+		}
+		res += "\n" // new line after row
+	}
+	return res
+}
+
+func QuadC(x, y int) string {
+	res := ""
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && col == 1 { // Top left corner
+				res += "A"
+			} else if row == 1 && col == x { // Top right corner
+				res += "A"
+			} else if row == y && col == 1 { // Bottom left corner
+				res += "C"
+			} else if row == y && col == x { // Bottom right corner
+				res += "C"
+			} else if row == 1 || row == y { // bottom and top border
+				res += "B"
+			} else if col == 1 || col == x { // side borders
+				res += "B"
+			} else { // empty insides
+				res += " "
+			}
+		}
+		res += "\n" // new line after row
+	}
+	return res
+}
+
+func QuadD(x, y int) string {
+	res := ""
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && col == 1 { // Top left corner
+				res += "A"
+			} else if row == 1 && col == x { // Top right corner
+				res += "C"
+			} else if row == y && col == 1 { // Bottom left corner
+				res += "A"
+			} else if row == y && col == x { // Bottom right corner
+				res += "C"
+			} else if row == 1 || row == y { // bottom and top border
+				res += "B"
+			} else if col == 1 || col == x { // side borders
+				res += "B"
+			} else { // empty insides
+				res += " "
+			}
+		}
+		res += "\n" // new line after row
+	}
+	return res
+}
+
+func QuadE(x, y int) string {
+	res := ""
+	for row := 1; row <= y; row++ {
+		for col := 1; col <= x; col++ {
+			if row == 1 && col == 1 { // Top left corner
+				res += "A"
+			} else if row == 1 && col == x { // Top right corner
+				res += "C"
+			} else if row == y && col == 1 { // Bottom left corner
+				res += "C"
+			} else if row == y && col == x { // Bottom right corner
+				res += "A"
+			} else if row == 1 || row == y { // bottom and top border
+				res += "B"
+			} else if col == 1 || col == x { // side borders
+				res += "B"
+			} else { // empty insides
+				res += " "
+			}
+		}
+		res += "\n" // new line after row
+	}
+	return res
+}
