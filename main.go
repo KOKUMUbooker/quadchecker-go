@@ -117,5 +117,3 @@ func main() {
 		os.Stdout.WriteString(matches[i])
 	}
 }
-
-
