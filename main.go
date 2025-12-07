@@ -5,66 +5,73 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
-	// Read piped data from std input
 	scanner := bufio.NewScanner(os.Stdin)
-	out := ""
-	x := 0
-	y := 0
 
-	for scanner.Scan() { // Read line by line
-		rowCols := scanner.Text()
-		out += rowCols + "\n"
-		x = len(rowCols)
-		y++ // Each line represents a row
+	var lines []string
+	width := -1
+	height := 0
+
+	// Read input and validate row widths
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if width == -1 {
+			width = len(line)
+		} else if len(line) != width { // Ensure all widths are same
+			fmt.Println("Not a quad function")
+			return
+		}
+
+		lines = append(lines, line)
+		height++
 	}
-	
+
 	if scanner.Err() != nil {
+		fmt.Println("Not a quad function")
 		return
 	}
 
-	res := ""
-	if QuadA(x, y) == out {
-		res += "[quadA] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
-	}
-
-	if QuadB(x, y) == out {
-		if len(res) > 0 {
-			res += " || "
-		}
-		res += "[quadB] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
-	}
-
-	if QuadC(x, y) == out {
-		if len(res) > 0 {
-			res += " || "
-		}
-		res += "[quadC] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
-	}
-
-	if QuadD(x, y) == out {
-		if len(res) > 0 {
-			res += " || "
-		}
-		res += "[quadD] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
-	}
-
-	if QuadE(x, y) == out {
-		if len(res) > 0 {
-			res += " || "
-		}
-		res += "[quadE] [" + strconv.Itoa(x) + "] [" + strconv.Itoa(y) + "]"
-	}
-
-	if res == "" {
-		fmt.Printf("Not a quad function\n")
+	// Reject if no rows or no columns
+	if width <= 0 || height <= 0 {
+		fmt.Println("Not a quad function")
 		return
 	}
 
-	res += "\n"
-	fmt.Printf("%v", res)
+	// Join lines with newline to match quad output format
+	input := strings.Join(lines, "\n")
+
+	matches := []string{}
+
+	if compareQuad(input, QuadA(width, height)) {
+		matches = append(matches, "[quadA] ["+strconv.Itoa(width)+"] ["+strconv.Itoa(height)+"]")
+	}
+	if compareQuad(input, QuadB(width, height)) {
+		matches = append(matches, "[quadB] ["+strconv.Itoa(width)+"] ["+strconv.Itoa(height)+"]")
+	}
+	if compareQuad(input, QuadC(width, height)) {
+		matches = append(matches, "[quadC] ["+strconv.Itoa(width)+"] ["+strconv.Itoa(height)+"]")
+	}
+	if compareQuad(input, QuadD(width, height)) {
+		matches = append(matches, "[quadD] ["+strconv.Itoa(width)+"] ["+strconv.Itoa(height)+"]")
+	}
+	if compareQuad(input, QuadE(width, height)) {
+		matches = append(matches, "[quadE] ["+strconv.Itoa(width)+"] ["+strconv.Itoa(height)+"]")
+	}
+
+	if len(matches) == 0 {
+		fmt.Println("Not a quad function")
+		return
+	}
+
+	fmt.Println(strings.Join(matches, " || "))
+}
+
+func compareQuad(input, quad string) bool { // Ensure for all \n characters in last line get removed for both strings
+	return strings.TrimRight(input, "\n") == strings.TrimRight(quad, "\n")
 }
 
 func QuadA(x, y int) string {
