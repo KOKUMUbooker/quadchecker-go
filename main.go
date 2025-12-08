@@ -19,12 +19,6 @@ func main() {
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		if line == "" && len(lines) == 0 {
-			continue // skip empty line at beginning
-		}
-		if line == "" && scanner.Err() == nil && !scanner.Scan() {
-			break // ignore the empty line at the end of the file
-		}
 		if width == -1 {
 			width = len(line)
 		} else if len(line) != width { // Ensure all widths are same
